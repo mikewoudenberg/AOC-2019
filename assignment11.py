@@ -49,5 +49,12 @@ def moveRobot(input, startColor):
 
 
 print('Assignment 1:', len(moveRobot(input.copy(), 0)))
+
+print('Assignment 2:')
 pixels = moveRobot(input.copy(), 1)
-print('Assignment 2', pixels)
+coords = [key for (key, value) in pixels.items() if value == 1]
+x1, x2, y1, y2 = min(coords, key=lambda x: x[0])[0], max(coords, key=lambda x: x[0])[0], min(
+    coords, key=lambda x: x[1])[1], max(coords, key=lambda x: x[1])[1]
+for y in range(y1, y2 + 1):
+    print("".join(['.' if pixels.get((x, y), 0)
+                   == 0 else '█' for x in range(x1, x2 + 1)]))
