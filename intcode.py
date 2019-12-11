@@ -9,10 +9,7 @@ def runProgram(prog, stdin=[]):
             return stdin.pop(0)
             yield ()
 
-    try:
-        res = next(evalProgram(prog.copy(), inp, outp))
-    except StopIteration as e:
-        return ([e.value], stdout)
+    return (next(evalProgram(prog.copy(), inp, outp)), stdout)
 
 
 def getParam(prog, idx, paramMode, relativeBase):
@@ -100,4 +97,4 @@ def evalProgram(prog, inp, outp):
         else:
             print("BAD CODE %d AT %d" % (prog[idx], idx))
             break
-    return prog[0]
+    yield prog[0]
