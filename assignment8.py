@@ -30,4 +30,5 @@ for layer in layers[1:]:
         if pixel == 2:
             image[i] = layer[i]
 image.shape = (imgDim[1], imgDim[0])
-print(image)
+for y in image:
+    print("".join(['.' if x == 0 else '█' for x in y]))

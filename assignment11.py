@@ -51,6 +51,6 @@ print('Assignment 2:')
 pixels = moveRobot(input.copy(), 1)
 x1, x2, y1, y2 = getBoundingRect(
     [key for (key, value) in pixels.items() if value == 1])
-for y in range(y1, y2 + 1):
+for y in range(y1, y2):
     print("".join(['.' if pixels.get((x, y), 0)
-                   == 0 else '█' for x in range(x1, x2 + 1)]))
+                   == 0 else '█' for x in range(x1, x2)]))
