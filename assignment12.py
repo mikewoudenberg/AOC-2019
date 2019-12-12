@@ -38,27 +38,29 @@ def energyInSystem(moons):
     return totalEnergy
 
 
-def simulate(moons, steps):
+def simulate(moons):
+    for (moon, otherMoon) in itertools.combinations(moons, 2):
+        signs = [np.sign(x-y)
+                 for (x, y) in zip(otherMoon.position, moon.position)]
+        moon.velocity += signs
+        otherMoon.velocity -= signs
+
+    for moon in moons:
+        moon.position = moon.position + moon.velocity
+
+
+def iterate(moons, steps):
+    for i in range(steps):
+        simulate(moons)
+
+
+def findCycles(moons, steps):
+    cycles = []
     projections = [set(), set(), set()]
     dimensionsToLookFor = [0, 1, 2]
 
-    def updateVelocity(moons):
-        for (moon, otherMoon) in itertools.combinations(moons, 2):
-            signs = [np.sign(x-y)
-                     for (x, y) in zip(otherMoon.position, moon.position)]
-            moon.velocity += signs
-            otherMoon.velocity -= signs
-
-    def updatePosition(moon):
-        moon.position = moon.position + moon.velocity
-
-    cycles = []
-
     for i in range(steps):
-        updateVelocity(moons)
-        for moon in moons:
-            updatePosition(moon)
-
+        simulate(moons)
         for dim in dimensionsToLookFor:
             projection = tuple([(moon.position[dim], moon.velocity[dim])
                                 for moon in moons])
@@ -71,8 +73,8 @@ def simulate(moons, steps):
 
 
 moons = getMoons(readlines('data12.txt'))
-simulate(moons.copy(), 1000)
+iterate(moons.copy(), 1000)
 print('Assignment 1:', energyInSystem(moons))
 
-cycles = simulate(moons.copy(), 10000000)
+cycles = findCycles(moons.copy(), 10000000)
 print('Assignment 2:', np.lcm.reduce(cycles))
