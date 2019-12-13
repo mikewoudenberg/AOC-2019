@@ -1,3 +1,4 @@
+import curses
 from intcode import evalProgram
 from util import getBoundingRect
 from collections import Counter
@@ -11,6 +12,27 @@ def readlines(filename):
 
 
 input = {i: int(x) for i, x in enumerate(readlines(filepath)[0].split(','))}
+
+
+stdscr = curses.initscr()
+codeToScreen = {
+    0: '.',
+    1: '█',
+    2: '▒',
+    3: '▄',
+    4: 'o'
+}
+
+
+def draw(state):
+    x1, x2, y1, y2 = getBoundingRect(list(state.keys()))
+
+    for y in range(y1, y2):
+
+        line = "".join([codeToScreen[state.get((x, y), 0)]
+                        for x in range(x1+1, x2)])
+        stdscr.addstr(y - y1, 0, line)
+    stdscr.refresh()
 
 
 def playGame(prog):
@@ -33,6 +55,7 @@ def playGame(prog):
                 ball = loc
             elif x == 3:
                 paddle = loc
+                draw(state)
             coord = []
 
         else:
