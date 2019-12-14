@@ -1,6 +1,6 @@
 import re
 import math
-from collections import Counter
+from collections import Counter, defaultdict
 
 
 class Rule:
@@ -39,7 +39,7 @@ def buildRules(lines):
 rules = buildRules(readlines('data14.txt'))
 
 
-storage = {}
+storage = defaultdict(int)
 
 
 def getOre(comp, quantity):
@@ -54,7 +54,7 @@ def getOre(comp, quantity):
             result += required
         else:
             required = multiplier * count
-            stored = storage.get(name, 0)
+            stored = storage[name]
             if stored >= required:
                 storage[name] = stored - required
             else:
@@ -69,7 +69,7 @@ def getOre(comp, quantity):
 print('Assignment 1:', getOre(rules['FUEL'], 1))
 maxOre = 1000000000000
 for i in range(1376630, 1376633):
-    storage = {}
+    storage = defaultdict(int)
     if getOre(rules['FUEL'], i) > maxOre:
         print('Assignment 2:', i-1)
         break

@@ -1,7 +1,7 @@
 import curses
 from intcode import evalProgram
 from util import getBoundingRect
-from collections import Counter
+from collections import Counter, defaultdict
 
 filepath = 'data13.txt'
 
@@ -29,14 +29,14 @@ def draw(state):
 
     for y in range(y1, y2):
 
-        line = "".join([codeToScreen[state.get((x, y), 0)]
+        line = "".join([codeToScreen[state[(x, y)]]
                         for x in range(x1+1, x2)])
         stdscr.addstr(y - y1, 0, line)
     stdscr.refresh()
 
 
 def playGame(prog):
-    state = {}
+    state = defaultdict(int)
     coord = []
     ball = (0, 0)
     paddle = (0, 0)
