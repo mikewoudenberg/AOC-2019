@@ -1,7 +1,9 @@
 import time
+import functools
 
 
 def timeit(method):
+    @functools.wraps(method)
     def timed(*args, **kw):
         ts = time.perf_counter()
         result = method(*args, **kw)
