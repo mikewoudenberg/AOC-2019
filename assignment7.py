@@ -1,16 +1,11 @@
 import itertools
 import queue
-from intcode import runProgram, evalProgram
+from intcode import evalProgram, readIntCode, runProgram
 
 filepath = 'data7.txt'
 
 
-def readlines(filename):
-    lineList = [line.rstrip('\n') for line in open(filename)]
-    return lineList
-
-
-input = {i: int(x) for i, x in enumerate(readlines(filepath)[0].split(','))}
+input = readIntCode(filepath)
 
 signal = 0
 for ampSettings in itertools.permutations([0, 1, 2, 3, 4]):

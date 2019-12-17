@@ -1,15 +1,9 @@
 import numpy as np
-from intcode import runProgram
+from intcode import readIntCode, runProgram
 
 filepath = 'data9.txt'
 
-
-def readlines(filename):
-    lineList = [line.rstrip('\n') for line in open(filename)]
-    return lineList
-
-
-input = {i: int(x) for i, x in enumerate(readlines(filepath)[0].split(','))}
+input = readIntCode(filepath)
 
 stdout = []
 (_, stdout) = runProgram(input.copy(), [1])

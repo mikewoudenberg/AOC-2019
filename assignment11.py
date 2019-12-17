@@ -1,16 +1,9 @@
 import numpy as np
-from intcode import evalProgram
+from intcode import evalProgram, readIntCode
 from util import getBoundingRect
 
 filepath = 'data11.txt'
-
-
-def readlines(filename):
-    lineList = [line.rstrip('\n') for line in open(filename)]
-    return lineList
-
-
-input = {i: int(x) for i, x in enumerate(readlines(filepath)[0].split(','))}
+input = readIntCode(filepath)
 
 
 def moveRobot(input, startColor):
