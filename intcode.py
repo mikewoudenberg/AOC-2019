@@ -98,3 +98,8 @@ def evalProgram(prog, inp, outp):
             print("BAD CODE %d AT %d" % (prog[idx], idx))
             break
     yield prog[0]
+
+
+def readIntCode(filename):
+    lineList = [line.rstrip('\n') for line in open(filename)]
+    return {i: int(x) for i, x in enumerate(lineList[0].split(','))}
